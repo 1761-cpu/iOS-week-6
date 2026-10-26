@@ -1,7 +1,8 @@
 import Foundation
+import Combine
 
-class DeliveryManager {
-    private var orders: [DeliveryOrder] = []
+class DeliveryManager: ObservableObject {
+    @Published var orders: [DeliveryOrder] = []
     
     // MARK: - Thêm / Xoá
     func addOrder(_ order: DeliveryOrder) {
@@ -12,16 +13,19 @@ class DeliveryManager {
         return orders
     }
     
-    // MARK: - Thống kê
-    // Tính tổng phí giao hàng của tất cả đơn
-    func totalRevenue() -> Double {
-        var total = 0.0
-        for order in orders {
-            total += order.calculateFee()
-        }
-        return total
+    // MARK: - Xác nhận thanh toán
+    func togglePaid(for order: DeliveryOrder) {
+        let currentStatus = order.isPaid()
+        order.setPaid(!currentStatus)
+        
+        objectWillChange.send()
     }
     
+    // MARK: - Thống kê
+    func totalRevenue() -> Double {
+        return orders.reduce(0) { $0 + $1.calculateFee() }
+    }
+
     // Đếm số lượng từng loại dịch vụ
     func countStandard() -> Int { return orders.filter { $0 is StandardDelivery }.count }
     func countExpress() -> Int { return orders.filter { $0 is ExpressDelivery }.count }

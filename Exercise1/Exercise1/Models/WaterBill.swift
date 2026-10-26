@@ -1,8 +1,8 @@
 import Foundation
 
 class WaterBill: Bill {
-    private var amount: Int       // số m³
-    private var unitprice: Int    // 10000 VND/m³
+    private var amount: Int       // m³
+    private var unitprice: Int    // VND/m³
     private var paid: Bool
 
     override init() {

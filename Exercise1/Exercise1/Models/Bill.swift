@@ -1,8 +1,7 @@
 import Foundation
 
-// Class cha chứa mọi thông tin chung
 class Bill: Identifiable {
-    var id: String                    // internal → Identifiable dùng được
+    var id: String
     private var customerName: String
     private var customerAddress: String
     private var month: Int
@@ -40,7 +39,6 @@ class Bill: Identifiable {
     func setYear(_ y: Int)        { year = y }
 
     // MARK: - Calculate (children override)
-    // Base trả về 0 — mỗi lớp con sẽ override theo công thức riêng
     func calculateBill(month: Int, year: Int) -> Double {
         return 0.0
     }

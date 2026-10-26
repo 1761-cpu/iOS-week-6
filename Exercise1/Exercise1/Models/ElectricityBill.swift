@@ -1,9 +1,9 @@
 import Foundation
 
 class ElectricityBill: Bill {
-    // MARK: - Properties (riêng của Điện)
-    private var amount: Int       // số kWh
-    private var unitprice: Int    // 2500 VND/kWh
+    // MARK: - Properties
+    private var amount: Int       // kWh
+    private var unitprice: Int    // VND/kWh
     private var paid: Bool
 
     // MARK: - Constructors
@@ -31,7 +31,7 @@ class ElectricityBill: Bill {
     func setAmount(_ a: Int) { amount = a }
     func setPaid(_ b: Bool)  { paid = b }
 
-    // MARK: - Override công thức tính tiền
+    // MARK: - Override 
     override func calculateBill(month: Int, year: Int) -> Double {
         return Double(amount * unitprice)
     }

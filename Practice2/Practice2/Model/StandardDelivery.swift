@@ -1,7 +1,7 @@
 import Foundation
 
 class StandardDelivery: DeliveryOrder {
-    // Phí cố định 20,000 VND
+    // Fixed fee 20,000 VND
     override func calculateFee() -> Double {
         return 20000.0
     }

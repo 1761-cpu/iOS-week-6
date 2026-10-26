@@ -1,10 +1,11 @@
 import Foundation
 
 class DeliveryOrder: Identifiable {
-    var id: String // Dùng làm orderID
+    var id: String 
     private var customerName: String
     private var deliveryAddress: String
     private var orderValue: Double
+    private var paid: Bool
     
     // MARK: - Constructors
     init() {
@@ -12,6 +13,7 @@ class DeliveryOrder: Identifiable {
         self.customerName = ""
         self.deliveryAddress = ""
         self.orderValue = 0.0
+        self.paid = false
     }
     
     init(id: String, name: String, address: String, orderValue: Double) {
@@ -19,6 +21,7 @@ class DeliveryOrder: Identifiable {
         self.customerName = name
         self.deliveryAddress = address
         self.orderValue = orderValue
+        self.paid = false
     }
     
     // MARK: - Getters
@@ -26,14 +29,16 @@ class DeliveryOrder: Identifiable {
     func getName() -> String { return customerName }
     func getAddress() -> String { return deliveryAddress }
     func getOrderValue() -> Double { return orderValue }
+    func isPaid() -> Bool { return paid }
     
     // MARK: - Setters
     func setID(_ newID: String) { self.id = newID }
     func setName(_ newName: String) { self.customerName = newName }
     func setAddress(_ newAddress: String) { self.deliveryAddress = newAddress }
     func setOrderValue(_ newValue: Double) { self.orderValue = newValue }
-    
-    // MARK: - Methods (Lớp con sẽ override)
+    func setPaid(_ status: Bool) { self.paid = status }
+
+    // MARK: - Methods 
     // Phí giao hàng mặc định là 0
     func calculateFee() -> Double {
         return 0.0

@@ -1,8 +1,9 @@
 import Foundation
+import Combine
 
-class BillManager {
+class BillManager: ObservableObject {
     // MARK: - Data
-    private var bills: [Bill] = []
+    @Published var bills: [Bill] = []
 
     // MARK: - Thêm / xoá
     func addBill(_ bill: Bill) {
@@ -25,14 +26,19 @@ class BillManager {
         return nil
     }
 
-    // MARK: - Thống kê — minh hoạ POLYMORPHISM
-    // Không cần biết bill là Điện/Nước/Internet, gọi calculateBill() là đủ
-    func totalRevenue() -> Double {
-        var total = 0.0
-        for b in bills {
-            total += b.calculateBill(month: b.getMonth(), year: b.getYear())
+    func togglePaid(for bill: Bill) {
+        if let eBill = bill as? ElectricityBill {
+            eBill.setPaid(!eBill.isPaid())
+        } else if let wBill = bill as? WaterBill {
+            wBill.setPaid(!wBill.isPaid())
+        } else if let iBill = bill as? InternetBill {
+            iBill.setPaid(!iBill.isPaid())
         }
-        return total
+        objectWillChange.send() // Ép UI vẽ lại
+    }
+    
+    func totalRevenue() -> Double {
+        return bills.reduce(0) { $0 + $1.calculateBill(month: $1.getMonth(), year: $1.getYear()) }
     }
 
     func countElectricity() -> Int {
